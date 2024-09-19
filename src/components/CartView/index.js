@@ -1,10 +1,29 @@
-import { useContext } from 'react';
+
 import CartItem from '../CartItem';
-import Cart from '../../Context/CartContext';
+
 import './index.css';
 
+const cartList = [
+    {
+      title: 'Product 1',
+      brand: 'Brand Name',
+      id: 1001,
+      imageUrl: 'https://assets.ccbp.in/frontend/react-js/sample-product-img.jpg',
+      price: 760,
+      quantity: 5,
+    },
+    {
+      title: 'Product 2',
+      brand: 'Brand Name',
+      id: 1002,
+      imageUrl: 'https://assets.ccbp.in/frontend/react-js/sample-product-img.jpg',
+      price: 760,
+      quantity: 2,
+    },
+  ]
+
 const CartView = () => {
-  const { cartList } = useContext(Cart); 
+ 
 
   return (
     <div className="cart-view-container">

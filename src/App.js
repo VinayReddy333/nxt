@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Store from './Context/CartContext'
+
 import Home from './components/Home';
 import Login from './components/Login';
 import Cart from './components/Cart';
@@ -11,7 +11,7 @@ import './App.css'
 const App = () => (
   
     <BrowserRouter>
-    <Store>
+   
       <Routes>
        <Route path='/login' element={<Login />} /> 
         <Route path='/' element={<Home />} />
@@ -20,7 +20,7 @@ const App = () => (
         <Route path='/products/:id' element={<ProductItemDetails/>}/>
         <Route path='*' element={<NotFound />} />
       </Routes>
-      </Store>
+      
     </BrowserRouter>
   
 )

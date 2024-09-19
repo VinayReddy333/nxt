@@ -1,8 +1,8 @@
-import { useState, useEffect, useCallback,useContext } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
-import Cart from '../../Context/CartContext'
+
 
 import Header from '../Header';
 import { IoAddOutline } from "react-icons/io5";
@@ -23,7 +23,7 @@ const ProductItemDetails = () => {
   const [similarProductsData, setSimilarProductsData] = useState([]);
   const [apiStatus, setApiStatus] = useState(apiStatusConstants.initial);
   const [quantity, setQuantity] = useState(1);
-  const [ setCartList] = useContext(Cart)
+  
 
   
 
@@ -103,10 +103,7 @@ const ProductItemDetails = () => {
     setQuantity(prevQuantity => prevQuantity + 1);
   };
 
-  const onClickAdd = () => {
-    setCartList(...productData,quantity)
-
-  }
+  const onClickAdd = () => {}
 
   const renderProductDetailsView = () => {
     const {

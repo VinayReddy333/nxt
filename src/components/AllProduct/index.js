@@ -1,32 +1,21 @@
 import { useState, useEffect } from 'react';
-import Loader from 'react-loader-spinner';
+
 import Cookies from 'js-cookie';
 
-import FiltersGroup from '../FiltersGroup';
+
 import ProductCard from '../ProductCard';
 import ProductsHeader from '../ProductsHeader';
 
 import './index.css';
 
-const categoryOptions = [
-  { name: 'Clothing', categoryId: '1' },
-  { name: 'Electronics', categoryId: '2' },
-  { name: 'Appliances', categoryId: '3' },
-  { name: 'Grocery', categoryId: '4' },
-  { name: 'Toys', categoryId: '5' },
-];
+
 
 const sortbyOptions = [
   { optionId: 'PRICE_HIGH', displayText: 'Price (High-Low)' },
   { optionId: 'PRICE_LOW', displayText: 'Price (Low-High)' },
 ];
 
-const ratingsList = [
-  { ratingId: '4', imageUrl: 'https://assets.ccbp.in/frontend/react-js/rating-four-stars-img.png' },
-  { ratingId: '3', imageUrl: 'https://assets.ccbp.in/frontend/react-js/rating-three-stars-img.png' },
-  { ratingId: '2', imageUrl: 'https://assets.ccbp.in/frontend/react-js/rating-two-stars-img.png' },
-  { ratingId: '1', imageUrl: 'https://assets.ccbp.in/frontend/react-js/rating-one-star-img.png' },
-];
+
 
 const apiStatusConstants = {
   initial: 'INITIAL',
@@ -39,18 +28,16 @@ const AllProductsSection = () => {
   const [productsList, setProductsList] = useState([]);
   const [apiStatus, setApiStatus] = useState(apiStatusConstants.initial);
   const [activeOptionId, setActiveOptionId] = useState(sortbyOptions[0].optionId);
-  const [activeCategoryId, setActiveCategoryId] = useState('');
-  const [searchInput, setSearchInput] = useState('');
-  const [activeRatingId, setActiveRatingId] = useState('');
+  
 
   useEffect(() => {
     getProducts();
-  }, [activeOptionId, activeCategoryId, searchInput, activeRatingId]);
+  }, [activeOptionId]);
 
   const getProducts = async () => {
     setApiStatus(apiStatusConstants.inProgress);
     const jwtToken = Cookies.get('jwt_token');
-    const apiUrl = `https://apis.ccbp.in/products?sort_by=${activeOptionId}&category=${activeCategoryId}&title_search=${searchInput}&rating=${activeRatingId}`;
+    const apiUrl = `https://apis.ccbp.in/products?sort_by=${activeOptionId}`;
     const options = {
       headers: { Authorization: `Bearer ${jwtToken}` },
       method: 'GET',
@@ -77,23 +64,13 @@ const AllProductsSection = () => {
     setActiveOptionId(activeOptionId);
   };
 
-  const clearFilters = () => {
-    setSearchInput('');
-    setActiveCategoryId('');
-    setActiveRatingId('');
-  };
 
-  const changeRating = activeRatingId => {
-    setActiveRatingId(activeRatingId);
-  };
 
-  const changeCategory = activeCategoryId => {
-    setActiveCategoryId(activeCategoryId);
-  };
+  
 
-  const enterSearchInput = () => {
-    getProducts();
-  };
+ 
+
+  
 
   const renderFailureView = () => (
     <div className="products-error-view-container">
@@ -136,11 +113,7 @@ const AllProductsSection = () => {
     );
   };
 
-  const renderLoadingView = () => (
-    <div className="products-loader-container">
-      <Loader type="ThreeDots" color="#0b69ff" height="50" width="50" />
-    </div>
-  );
+ 
 
   const renderAllProducts = () => {
     switch (apiStatus) {
@@ -148,8 +121,7 @@ const AllProductsSection = () => {
         return renderProductsListView();
       case apiStatusConstants.failure:
         return renderFailureView();
-      case apiStatusConstants.inProgress:
-        return renderLoadingView();
+      
       default:
         return null;
     }
@@ -157,18 +129,7 @@ const AllProductsSection = () => {
 
   return (
     <div className="all-products-section">
-      <FiltersGroup
-        searchInput={searchInput}
-        categoryOptions={categoryOptions}
-        ratingsList={ratingsList}
-        changeSearchInput={setSearchInput}
-        enterSearchInput={enterSearchInput}
-        activeCategoryId={activeCategoryId}
-        activeRatingId={activeRatingId}
-        changeCategory={changeCategory}
-        changeRating={changeRating}
-        clearFilters={clearFilters}
-      />
+      
       {renderAllProducts()}
     </div>
   );
