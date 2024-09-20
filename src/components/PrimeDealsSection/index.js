@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import ProductCard from '../ProductCard';
+
 import './index.css';
 
 const apiStatusConstants = {

@@ -44,6 +44,7 @@ const AllProductsSection = () => {
     };
     const response = await fetch(apiUrl, options);
     if (response.ok) {
+      console.log(response)
       const fetchedData = await response.json();
       const updatedData = fetchedData.products.map(product => ({
         title: product.title,
@@ -60,7 +61,7 @@ const AllProductsSection = () => {
     }
   };
 
-  const changeSortby = activeOptionId => {
+  const updateActiveOptionId = activeOptionId => {
     setActiveOptionId(activeOptionId);
   };
 
@@ -92,7 +93,7 @@ const AllProductsSection = () => {
         <ProductsHeader
           activeOptionId={activeOptionId}
           sortbyOptions={sortbyOptions}
-          changeSortby={changeSortby}
+          updateActiveOptionId={updateActiveOptionId}
         />
         <ul className="products-list">
           {productsList.map(product => (

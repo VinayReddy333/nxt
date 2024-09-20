@@ -6,6 +6,7 @@ import Cart from './components/Cart';
 import Products from './components/Products';
 import ProductItemDetails from './components/ProductItemDetails';
 import NotFound from './components/NotFound';
+
 import './App.css'
 
 const App = () => (
@@ -20,7 +21,7 @@ const App = () => (
         <Route path='/products/:id' element={<ProductItemDetails/>}/>
         <Route path='*' element={<NotFound />} />
       </Routes>
-      
+     
     </BrowserRouter>
   
 )
