@@ -107,6 +107,7 @@ const ProductItemDetails = () => {
 
   const onClickAdd = () => {
     setCartList(prevCartList => [...prevCartList, productData]);
+
   };
   
 
