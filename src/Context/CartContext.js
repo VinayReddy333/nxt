@@ -11,30 +11,32 @@ export const Tarun = ({ children }) => {
         const update =cartList.filter(item => item.id !== itemId)
         setCartList(update)
      }
+     
      const incrementCartItemQuantity = (id) => {
-        const updatedCart = cartList.map((eachItem) => {
-          if (id === eachItem.id) {
-            const updatedQuantity = eachItem.quantity + 1;
-            return { ...eachItem, quantity: updatedQuantity };
-          }
-          return eachItem;
-        });
-        setCartList(updatedCart); 
-      };
+      const updatedCart = cartList.map((eachItem) => {
+        if (id === eachItem.id) {
+          const updatedQuantity = eachItem.quantity >= 1 ? eachItem.quantity + 1 : 1;
+          return { ...eachItem, quantity: updatedQuantity };
+        }
+        return eachItem;
+      });
+      setCartList(updatedCart); 
+    };
+    
 
       const decrementCartItemQuantity = (id) => {
-
         const updatedCart = cartList.map((eachItem) => {
           if (id === eachItem.id) {
-            const updatedQuantity = eachItem.quantity - 1;
+            const updatedQuantity = eachItem.quantity > 1 ? eachItem.quantity - 1 : 1; // Ensure quantity does not go below 1
             return { ...eachItem, quantity: updatedQuantity };
           }
           return eachItem;
         });
         setCartList(updatedCart); 
       };
-
       
+
+     
 
       
 

@@ -24,7 +24,7 @@ const LoginForm = () => {
       expires: 30,
       path: '/',
     });
-    navigate('/'); // Navigate to the home page
+    navigate('/'); 
   };
 
   const onSubmitFailure = errorMsg => {

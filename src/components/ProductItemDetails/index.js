@@ -58,7 +58,8 @@ const ProductItemDetails = () => {
       const response = await fetch(apiUrl, options);
       if (response.ok) {
         const fetchedData = await response.json();
-        const updatedData = getFormattedData(fetchedData);
+        const updatedData = getFormattedData(fetchedData)
+        
         const updatedSimilarProductsData = fetchedData.similar_products.map(
           eachSimilarProduct => getFormattedData(eachSimilarProduct)
         );
@@ -71,7 +72,7 @@ const ProductItemDetails = () => {
     } catch (error) {
       setApiStatus(apiStatusConstants.failure);
     }
-  }, [getFormattedData, id]);
+  }, [getFormattedData, id])
 
   useEffect(() => {
     getProductData();
