@@ -15,7 +15,7 @@ export const Tarun = ({ children }) => {
      const incrementCartItemQuantity = (id) => {
       const updatedCart = cartList.map((eachItem) => {
         if (id === eachItem.id) {
-          const updatedQuantity = eachItem.quantity >= 1 ? eachItem.quantity + 1 : 1;
+          const updatedQuantity = eachItem.quantity > 1 ? eachItem.quantity + 1 : 1;
           return { ...eachItem, quantity: updatedQuantity };
         }
         return eachItem;

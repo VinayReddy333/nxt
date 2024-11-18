@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext,useEffect } from 'react';
 import {Cart} from '../../Context/CartContext'
 import CartItem from '../CartItem';
 
@@ -8,9 +8,12 @@ import './index.css';
 
 
 const CartView = () => {
- const {cartList} = useContext(Cart)
+ const {cartList,setCartList} = useContext(Cart)
 
- 
+ useEffect(() => {
+  const items = localStorage.getItem('cartList') !== null ? JSON.parse(localStorage.getItem('cartList')) : [];
+  setCartList(items)
+},[setCartList])
 
   return (
     <div className="cart-view-container">

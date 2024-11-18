@@ -24,6 +24,8 @@ const CartItem = (props) => {
     decrementCartItemQuantity(id)
   }
 
+  const totalPrice = price * quantity
+
   
 
  
@@ -47,6 +49,7 @@ const CartItem = (props) => {
         </div>
         <div className="total-price-delete-container">
           <p className="cart-total-price">Rs {price}/-</p>
+          <p>{totalPrice}</p>
           <button className="remove-button" type="button" onClick={onclickDelete} >
             Remove
           </button>

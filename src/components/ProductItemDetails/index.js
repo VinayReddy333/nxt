@@ -19,29 +19,33 @@ const apiStatusConstants = {
   inProgress: 'IN_PROGRESS',
 };
 
+
+const items = localStorage.getItem('cartList') !== null ? JSON.parse(localStorage.getItem('cartList')) : [];
+
+
 const ProductItemDetails = () => {
-  const [productData, setProductData] = useState({});
+  const [productData, setProductData] = useState(items);
   const [similarProductsData, setSimilarProductsData] = useState([]);
   const [apiStatus, setApiStatus] = useState(apiStatusConstants.initial);
   const [quantity, setQuantity] = useState(1);
   const {setCartList} = useContext(Cart)
   
 
-  
+ 
 
   const { id } = useParams();
 
-  const getFormattedData = useCallback(data => ({
-    availability: data.availability,
-    brand: data.brand,
-    description: data.description,
-    id: data.id,
-    imageUrl: data.image_url,
-    price: data.price,
-    rating: data.rating,
-    title: data.title,
-    totalReviews: data.total_reviews,
-  }), []);
+  // const getFormattedData = useCallback(data => ({
+  //   availability: data.availability,
+  //   brand: data.brand,
+  //   description: data.description,
+  //   id: data.id,
+  //   imageUrl: data.image_url,
+  //   price: data.price,
+  //   rating: data.rating,
+  //   title: data.title,
+  //   totalReviews: data.total_reviews,
+  // }), []);
 
   const getProductData = useCallback(async () => {
     setApiStatus(apiStatusConstants.inProgress);
@@ -56,12 +60,30 @@ const ProductItemDetails = () => {
 
     try {
       const response = await fetch(apiUrl, options);
+      const fetchedData = await response.json();
       if (response.ok) {
-        const fetchedData = await response.json();
-        const updatedData = getFormattedData(fetchedData)
+        
+        const updatedData = ({
+          availability: fetchedData.availability,
+          brand: fetchedData.brand,
+          description: fetchedData.description,
+          id: fetchedData.id,
+          imageUrl: fetchedData.image_url,
+          price: fetchedData.price,
+         rating:fetchedData.rating,
+         title: fetchedData.title,
+          totalReviews: fetchedData.total_reviews,
+        })
         
         const updatedSimilarProductsData = fetchedData.similar_products.map(
-          eachSimilarProduct => getFormattedData(eachSimilarProduct)
+          product => ({
+            id: product.id,
+            title: product.title,
+            brand: product.brand,
+            imageUrl: product.image_url,
+            price: product.price,
+            rating: product.rating,
+          })
         );
         setProductData(updatedData);
         setSimilarProductsData(updatedSimilarProductsData);
@@ -72,7 +94,7 @@ const ProductItemDetails = () => {
     } catch (error) {
       setApiStatus(apiStatusConstants.failure);
     }
-  }, [getFormattedData, id])
+  }, [ id])
 
   useEffect(() => {
     getProductData();
@@ -103,13 +125,21 @@ const ProductItemDetails = () => {
   };
 
   const onIncrementQuantity = () => {
-    setQuantity(prevQuantity => prevQuantity + 1);
+    
+      setQuantity(prevQuantity => prevQuantity + 1);
+
+    
+    
   };
 
   const onClickAdd = () => {
-    setCartList(prevCartList => [...prevCartList, productData]);
-
+    setCartList(prevCartList => {
+      const updatedCartList = [...prevCartList, productData];
+      localStorage.setItem('cartList', JSON.stringify(updatedCartList));
+      return updatedCartList;
+    });
   };
+  
   
 
   const renderProductDetailsView = () => {
